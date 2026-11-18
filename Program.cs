@@ -7,6 +7,8 @@ string playerName = GetPlayerName();
 Player player = SelectClass();
 Console.WriteLine($"You have selected a {player.GetType().Name} who goes by the name {playerName}");
 
+player.ShowStats();
+
 #endregion
 
 #region functions

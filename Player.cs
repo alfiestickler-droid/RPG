@@ -25,13 +25,37 @@ namespace RPG
             Armour = armour;
         }
 
+        #region functions
+
         public virtual double Attack()
         {
             return rnd.Next(1, (int)AttackMax);
         }
+
+        public virtual double HeavyAttack()
+        {
+            if (Stamina > 0)
+            {
+                Stamina--;
+                return rnd.Next(10, ((int)AttackMax + 10));
+            }
+            else
+            {
+                Console.WriteLine("You have no stamina left");
+                return Attack();
+            }
+        }
+
         public virtual double Defend()
         {
             return rnd.Next(1, (int)DefenseMax);
         }
+
+        public virtual void ShowStats()
+        {
+            Console.WriteLine($"{Name}'s \nHealth is {Health} \nmaximum attack is {AttackMax} \nmaximum defence is {DefenseMax} \nstamina is {Stamina} \narmour is {Armour}");
+        }
+
+        #endregion
     }
 }

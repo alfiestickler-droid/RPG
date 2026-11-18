@@ -19,12 +19,13 @@ namespace RPG
         {
             if (Mana > 0)
             {
-                return rnd.Next(10, 60);
+                Mana--;
+                return rnd.Next(10, ((int)AttackMax + 20)); 
             }
             else
             {
                 Console.WriteLine("You are out of mana!");
-                return 0;
+                return base.Attack();
             }
         }
 
