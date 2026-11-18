@@ -6,7 +6,7 @@ namespace RPG
 {
     class Player
     {
-        Random rnd = new Random();
+        public Random rnd = new Random();
 
         public string Name { get; set; }
         public double Health { get; set; }

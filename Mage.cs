@@ -12,5 +12,22 @@ namespace RPG
         {
             Mana = mana;
         }
+
+        #region functions
+
+        public double MagicAttack()
+        {
+            if (Mana > 0)
+            {
+                return rnd.Next(10, 60);
+            }
+            else
+            {
+                Console.WriteLine("You are out of mana!");
+                return 0;
+            }
+        }
+
+        #endregion
     }
 }
