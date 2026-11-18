@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RPG
 {
-    class NPC : Player
+    class NPC
     {
      
     }
