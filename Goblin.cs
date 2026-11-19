@@ -8,7 +8,7 @@ namespace RPG
     {
         
 
-        public Goblin(string name = "Goblin", double health = 20, double attackMax = 5, double defenseMax = 5, double armour = 0) : base(name, attackMax, defenseMax, armour)
+        public Goblin(string name = "Goblin", double health = 20, double attackMax = 10, double defenseMax = 5, double armour = 0) : base(name, health, attackMax, defenseMax, armour)
         {
             
         }

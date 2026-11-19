@@ -76,14 +76,50 @@ userChoice = UserChoice(3);
 switch (userChoice)
 {
     case 1:
+        Console.Clear();
         Console.WriteLine("You search the crates quietly and find a Health Potion and a Power Potion tucked inside an old medic's satchel.");
         player.Inv.AddToInventory("health potion");
         player.Inv.AddToInventory("power potion");
         break;
     case 2:
-
+        Console.Clear();
+        Console.WriteLine("You burst in on a Goblin smashing furniture he turns to you and you are ready to do battle");
+        Battle(player, new Goblin());
+        Console.WriteLine("After defeting the Goblin you search the room but find nothing.");
         break;
+    case 3:
+        Console.Clear();
+        Console.WriteLine("2 Goblin Ambushers lunges from the shadows.");
+        Battle(player, new Goblin());
+        Console.Clear();
+        Console.WriteLine("You have defeated the first Goblin, now for the second!\n");
+        Battle(player, new Goblin());
+        Console.WriteLine("After defeating both Goblins you look around for anything useful");
+        string swordOrShield = SwordOrShield();
+        Console.WriteLine($"\nAfter looking around you find a chest and open it inside you find a health potion and a {swordOrShield}.\n You equip the {swordOrShield}");
+        player.Inv.HealthPotion++;
+        switch (swordOrShield)
+        {
+            case "Steel Sword":
+                Console.WriteLine("+5 for each attack");
+                break;
+            case "Shield":
+                Console.WriteLine("+5 for each defence");
+                break;
+        }
+        break;
+
 }
+Continue();
+
+Console.WriteLine("Stepping out of the outer guardhouse passages, you find yourself standing before a massive, jagged archway carved directly into the bedrock. The worked stone of the human outpost ends here, giving way to ancient, moss-covered steps spiralling down into the pitch-black chill of the Sunken Ossuary.");
+Continue();
+Console.WriteLine("There is no time to rest and no safe place to light a fire. Strange, rhythmic scraping echoes up from the dark below, warning you that worse creatures than goblins are already stirring. You tighten your grip on your weapon, steady your breathing, and prepare to descend with whatever strength you have left.");
+Continue();
+Console.WriteLine("Before you take your first step down the stairs, the trials of the upper ruins leave their mark on you. Surviving the ambushes and navigating the darkened halls has sharpened your instincts.");
+Console.WriteLine();
+StatUpgrade();
+Continue();
 
 #endregion
 
@@ -210,11 +246,13 @@ void Battle(Player player, NPC enemy)
                 {
                     Console.WriteLine($"You hit the {enemy.Name} for {playerDamage}");
                     enemy.Health -= playerDamage;
+                    Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
                 }
 
                 if (enemy.Health <= 0)
                 {
                     Console.WriteLine($"You have defeated the {enemy.Name}");
+                    Continue();
                     enemyDead = true;
                 }
                 break;
@@ -230,16 +268,19 @@ void Battle(Player player, NPC enemy)
                 if (playerHeavyDamage <= 0)
                 {
                     Console.WriteLine("You missed and did 0 damage");
+                    Console.WriteLine($"Your stamina is now at {player.Stamina}");
                 }
                 else
                 {
                     Console.WriteLine($"You hit the {enemy.Name} for {playerHeavyDamage}");
+                    Console.WriteLine($"Your stamina is now at {player.Stamina}");
                     enemy.Health -= playerHeavyDamage;
                 }
 
                 if (enemy.Health <= 0)
                 {
                     Console.WriteLine($"You have defeated the {enemy.Name}");
+                    Continue();
                     enemyDead = true;
                 }
                 break;
@@ -284,27 +325,32 @@ void Battle(Player player, NPC enemy)
                 break;
         }
 
-        Console.WriteLine($"It's now {enemy.Name}'s turn");
-        Console.WriteLine();
-
-        double enemyDamage = enemy.Attack();
-        enemyDamage = enemyDamage - player.Armour - player.Defend();
-
-        if (enemyDamage <= 0)
+        if (!enemyDead)
         {
-            Console.WriteLine($"{enemy.Name} missed and did 0 damage");
-        }
-        else
-        {
-            Console.WriteLine($"{enemy.Name} hit you for {enemyDamage}");
-            enemy.Health -= enemyDamage;
-        }
 
-        if (player.Health <= 0)
-        {
-            Console.WriteLine($"You have been killed by a {enemy.Name},");
-            GameOver();
-            
+            Console.WriteLine($"It's now {enemy.Name}'s turn");
+            Console.WriteLine();
+
+            double enemyDamage = enemy.Attack();
+            enemyDamage = enemyDamage - player.Armour - player.Defend();
+
+            if (enemyDamage <= 0)
+            {
+                Console.WriteLine($"{enemy.Name} missed and did 0 damage");
+            }
+            else
+            {
+                Console.WriteLine($"{enemy.Name} hit you for {enemyDamage}");
+                player.Health -= enemyDamage;
+                Console.WriteLine($"Your health is now {player.Health}");
+            }
+
+            if (player.Health <= 0)
+            {
+                Console.WriteLine($"You have been killed by a {enemy.Name},");
+                GameOver();
+
+            }
         }
 
     }
@@ -316,6 +362,58 @@ void GameOver()
     Console.WriteLine();
 
     Environment.Exit(0);
+}
+
+string SwordOrShield()
+{
+    if (player.Inv.SteelSword == 1)
+    {
+        player.Inv.Shield++;
+        return "Shield";
+    }
+    else
+    {
+        player.Inv.SteelSword++;
+        return "Steel Sword";
+    }
+}
+
+void StatUpgrade()
+{
+    Console.WriteLine("You can upgrade 1 stat");
+    Console.WriteLine();
+    Console.WriteLine("1. Health +10");
+    Console.WriteLine("2. Maximum Attack +10");
+    Console.WriteLine("3. Maximum Defence +10");
+    Console.WriteLine("4. Stamina +1");
+    Console.WriteLine("5. Armor +3");
+
+    userChoice = UserChoice(5);
+
+    switch (userChoice)
+    {
+        case 1:
+            player.MaxHealth += 10;
+            player.Health += 10;
+            Console.WriteLine($"You have upgraded your health, max health now at {player.MaxHealth}");
+            break;
+        case 2:
+            player.AttackMax += 10;
+            Console.WriteLine($"You have upgraded your attack, max attack now at {player.AttackMax}");
+            break;
+        case 3:
+            player.DefenseMax += 10;
+            Console.WriteLine($"You have upgraded your defence, max defence now at {player.DefenseMax}");
+            break;
+        case 4:
+            player.Stamina ++;
+            Console.WriteLine($"You have upgraded your stamina, max stamina now at {player.Stamina}");
+            break;
+        case 5:
+            player.Armour += 3;
+            Console.WriteLine($"You have upgraded your armour, armour now at {player.Armour}");
+            break;
+    }
 }
 
 #endregion

@@ -35,11 +35,11 @@ namespace RPG
         {
             if (Inv.SteelSword == 1)
             {
-                return rnd.Next(1, (int)AttackMax) + 5;
+                return rnd.Next(1, (int)AttackMax + 1) + 5;
             }
             else
             {
-                return rnd.Next(1, (int)AttackMax);
+                return rnd.Next(1, (int)AttackMax + 1);
             }
         }
 
@@ -50,7 +50,7 @@ namespace RPG
                 if (Stamina > 0)
                 {
                     Stamina--;
-                    return rnd.Next(10, ((int)AttackMax + 15));
+                    return rnd.Next(10, ((int)AttackMax + 1 + 10))+ 5;
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace RPG
                 if (Stamina > 0)
                 {
                     Stamina--;
-                    return rnd.Next(10, ((int)AttackMax + 10));
+                    return rnd.Next(10, ((int)AttackMax + 1 + 10));
                 }
                 else
                 {
@@ -77,11 +77,11 @@ namespace RPG
         {
             if (Inv.Shield == 1)
             {
-                return rnd.Next(1, (int)DefenseMax) + 5;
+                return rnd.Next(1, (int)DefenseMax + 1) + 5;
             }
             else
             {
-                return rnd.Next(1, (int)DefenseMax);
+                return rnd.Next(1, (int)DefenseMax + 1);
             }
         }
 

@@ -25,11 +25,11 @@ namespace RPG
 
         public virtual double Attack()
         {
-            return rnd.Next(1, (int)AttackMax);
+            return rnd.Next(1, (int)AttackMax + 1);
         }
         public virtual double Defend()
         {
-            return rnd.Next(1, (int)DefenseMax);
+            return rnd.Next(1, (int)DefenseMax + 1);
         }
     }
 }
