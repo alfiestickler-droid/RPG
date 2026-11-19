@@ -1,17 +1,16 @@
 ﻿using RPG;
-
+bool playerDead = false;
 #region main
+
 #region Setup
 Console.WriteLine("Welcome to the game!");
 string playerName = GetPlayerName();
 Player player = SelectClass();
 Console.Clear();
-Inventory playerInv = new Inventory($"{playerName}'s Inventory");
 Console.WriteLine($"You have selected a {player.GetType().Name} who goes by the name {playerName}");
 player.ShowStats();
 Continue();
 #endregion
-
 
 Console.WriteLine("The cold rain lashes against the cracked stone walls of Oakhaven Outpost. You stand before the heavy iron gates leading down into the Whispering Ruins. For weeks, a thick, unnatural fog has poured from the depths, and tonight, the creatures of the dark finally pushed back.");
 Continue();
@@ -36,10 +35,12 @@ int userChoice = UserChoice(2);
 switch (userChoice)
 {
     case 1:
-        playerInv.AddToInventory("shield");
+        player.Inv.AddToInventory("shield");
+        Console.WriteLine("You lift the scarred, iron-rimmed shield. Vance gives a grim smile, knowing it will keep you alive.");
         break;
     case 2:
-        playerInv.AddToInventory("steel sword");
+        player.Inv.AddToInventory("steel sword");
+        Console.WriteLine("You unbuckle the heavy, well-balanced steel sword from Vance's belt. He nods approvingly as you test its weight.");
         break;
 }
 
@@ -130,7 +131,6 @@ int UserChoice(int numOfChoice)
         Console.WriteLine($"Please enter a valid choice between 1 and {numOfChoice}");
     }
 }
-
 
 
 #endregion

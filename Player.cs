@@ -15,6 +15,7 @@ namespace RPG
         public double Stamina { get; set; }
         public double Armour { get; set; }
         public double MaxHealth { get; set; }
+        public Inventory Inv { get; set; }
 
         public Player (string name, double health = 100, double attackMax = 15, double defenseMax = 15, double stamina = 3, double armour = 0, double maxHealth = 100)
         {
@@ -25,13 +26,21 @@ namespace RPG
             Stamina = stamina;
             Armour = armour;
             MaxHealth = maxHealth;
+            Inv = new Inventory($"{name}'s Inventory");
         }
 
         #region functions
 
         public virtual double Attack()
         {
-            return rnd.Next(1, (int)AttackMax);
+            if (Inv.SteelSword == 1)
+            {
+                return rnd.Next(1, (int)AttackMax) + 5;
+            }
+            else
+            {
+                return rnd.Next(1, (int)AttackMax);
+            }
         }
 
         public virtual double HeavyAttack()

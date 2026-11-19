@@ -4,7 +4,7 @@ using System.Text;
 
 namespace RPG
 {
-    internal class Inventory
+    class Inventory
     {
         public string Name { get; set; }
         public int HealthPotion { get; set; }
