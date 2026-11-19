@@ -12,6 +12,7 @@ player.ShowStats();
 Continue();
 #endregion
 
+#region intro
 Console.WriteLine("The cold rain lashes against the cracked stone walls of Oakhaven Outpost. You stand before the heavy iron gates leading down into the Whispering Ruins. For weeks, a thick, unnatural fog has poured from the depths, and tonight, the creatures of the dark finally pushed back.");
 Continue();
 Console.WriteLine("Stepping through the shattered courtyard, you see the aftermath of a brutal ambush. Broken spears and scorched banners litter the mud. Near the entrance to the subterranean stairs, leaning heavily against a crumbled pillar, is Captain Vance, the commander of the outpost's vanguard. His armour is rent, and a dark, cursed ichor seeps from a wound in his side.");
@@ -36,14 +37,52 @@ switch (userChoice)
 {
     case 1:
         player.Inv.AddToInventory("shield");
+        Console.Clear();
         Console.WriteLine("You lift the scarred, iron-rimmed shield. Vance gives a grim smile, knowing it will keep you alive.");
         break;
     case 2:
         player.Inv.AddToInventory("steel sword");
+        Console.Clear();
         Console.WriteLine("You unbuckle the heavy, well-balanced steel sword from Vance's belt. He nods approvingly as you test its weight.");
         break;
 }
 
+Continue();
+Console.WriteLine("With a final nod, Captain Vance closes his eyes as the rain washes over the courtyard. You turn toward the yawning blackness of the dungeon stairs, gripping your newly claimed gear, and step into the Whispering Ruins.");
+Continue();
+
+#endregion
+
+#region Act 1
+
+Console.WriteLine("Descending the stairs from Captain Vance, you enter the crumbling outer halls of the outpost. Torchlight dances across damp stone walls as the corridor splits into three distinct passages.");
+Console.WriteLine();
+Console.WriteLine("Path 1: A partially collapsed wooden door hangs open, revealing dusty shelves untouched by the chaos.");
+Console.WriteLine();
+Console.WriteLine("Path 2: Loud banging and snarling echo from behind a set of heavy double doors.");
+Console.WriteLine();
+Console.WriteLine("Path 3: Muddy footprints lead up a narrow spiral staircase toward a dimly lit landing.");
+
+Console.WriteLine();
+Console.WriteLine("Which path will you take?");
+Console.WriteLine("Path 1");
+Console.WriteLine("Path 2");
+Console.WriteLine("Path 3");
+userChoice = UserChoice(3);
+
+switch (userChoice)
+{
+    case 1:
+        Console.WriteLine("You search the crates quietly and find a Health Potion and a Power Potion tucked inside an old medic's satchel.");
+        player.Inv.AddToInventory("health potion");
+        player.Inv.AddToInventory("power potion");
+        break;
+    case 2:
+
+        break;
+}
+
+#endregion
 
 #endregion
 
@@ -132,5 +171,8 @@ int UserChoice(int numOfChoice)
     }
 }
 
-
+void Battle(Player player, NPC enemy)
+{
+    Console.WriteLine($"You have entered a battle with {NPC.Name}");
+}
 #endregion

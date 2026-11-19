@@ -45,21 +45,44 @@ namespace RPG
 
         public virtual double HeavyAttack()
         {
-            if (Stamina > 0)
+            if (Inv.SteelSword == 1)
             {
-                Stamina--;
-                return rnd.Next(10, ((int)AttackMax + 10));
+                if (Stamina > 0)
+                {
+                    Stamina--;
+                    return rnd.Next(10, ((int)AttackMax + 15));
+                }
+                else
+                {
+                    Console.WriteLine("You have no stamina left");
+                    return Attack();
+                }
             }
             else
             {
-                Console.WriteLine("You have no stamina left");
-                return Attack();
+                if (Stamina > 0)
+                {
+                    Stamina--;
+                    return rnd.Next(10, ((int)AttackMax + 10));
+                }
+                else
+                {
+                    Console.WriteLine("You have no stamina left");
+                    return Attack();
+                }
             }
         }
 
         public virtual double Defend()
         {
-            return rnd.Next(1, (int)DefenseMax);
+            if (Inv.Shield == 1)
+            {
+                return rnd.Next(1, (int)DefenseMax) + 5;
+            }
+            else
+            {
+                return rnd.Next(1, (int)DefenseMax);
+            }
         }
 
         public virtual void ShowStats()
