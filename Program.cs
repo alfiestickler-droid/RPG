@@ -5,9 +5,10 @@
 Console.WriteLine("Welcome to the game!");
 string playerName = GetPlayerName();
 Player player = SelectClass();
+Console.Clear();
 Console.WriteLine($"You have selected a {player.GetType().Name} who goes by the name {playerName}");
-
 player.ShowStats();
+Continue();
 
 #endregion
 
@@ -53,8 +54,7 @@ Player SelectClass()
         Console.WriteLine("The Rogue has high attack and low defence, also has a chance for a critical hit dealing double damage and has a small chance to dodge.\n");
         Console.WriteLine("The Cleric has a low attack but can spend a turn restoring a small portion of health and deal light damage.\n");
 
-        Console.WriteLine("press enter when ready to continue");
-        Console.ReadLine();
+        Continue();
         return SelectClass();
     }
     else
@@ -70,5 +70,13 @@ Player SelectClass()
     }
     
 }
+
+void Continue()
+{
+    Console.WriteLine("press enter when ready to continue");
+    Console.ReadLine();
+}
+
+
 
 #endregion

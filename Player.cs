@@ -14,8 +14,9 @@ namespace RPG
         public double DefenseMax { get; set; }
         public double Stamina { get; set; }
         public double Armour { get; set; }
+        public double MaxHealth { get; set; }
 
-        public Player (string name, double health = 100, double attackMax = 15, double defenseMax = 15, double stamina = 3, double armour = 0)
+        public Player (string name, double health = 100, double attackMax = 15, double defenseMax = 15, double stamina = 3, double armour = 0, double maxHealth = 100)
         {
             Name = name;
             Health = health;
@@ -23,6 +24,7 @@ namespace RPG
             DefenseMax = defenseMax;
             Stamina = stamina;
             Armour = armour;
+            MaxHealth = maxHealth;
         }
 
         #region functions

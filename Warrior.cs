@@ -6,12 +6,11 @@ namespace RPG
 {
     class Warrior : Player
     {
-        public double MaxHealth;
+        
 
-        public Warrior(string name, double health = 150, double attackMax = 15, double defenseMax = 25, double stamina = 3, double armour = 0, double maxHealth = 150) : base(name, attackMax, stamina, armour)
+        public Warrior(string name, double health = 150, double attackMax = 15, double defenseMax = 25, double stamina = 3, double armour = 0, double maxHealth = 150) : base(name, health, attackMax, defenseMax, stamina, armour, maxHealth)
         {
-            Health = health;
-            DefenseMax = defenseMax;
+            
         }
 
 
