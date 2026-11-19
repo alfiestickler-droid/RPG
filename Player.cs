@@ -54,7 +54,7 @@ namespace RPG
                 }
                 else
                 {
-                    Console.WriteLine("You have no stamina left");
+                    Console.WriteLine("You have no stamina left, you attack normally instead.");
                     return Attack();
                 }
             }
@@ -67,7 +67,7 @@ namespace RPG
                 }
                 else
                 {
-                    Console.WriteLine("You have no stamina left");
+                    Console.WriteLine("You have no stamina left, you attack normally instead.");
                     return Attack();
                 }
             }

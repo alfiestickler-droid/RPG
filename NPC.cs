@@ -8,13 +8,15 @@ namespace RPG
     {
         public Random rnd = new Random();
 
+        public string Name { get; set; }
         public double Health { get; set; }
         public double AttackMax { get; set; }
         public double DefenseMax { get; set; }
         public double Armour { get; set; }
 
-        public NPC(double health = 0, double attackMax = 0, double defenseMax = 0, double armour = 0)
+        public NPC(string name ="", double health = 0, double attackMax = 0, double defenseMax = 0, double armour = 0)
         {
+            Name = name;
             Health = health;
             AttackMax = attackMax;
             DefenseMax = defenseMax;

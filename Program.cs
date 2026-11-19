@@ -1,5 +1,4 @@
 ﻿using RPG;
-bool playerDead = false;
 #region main
 
 #region Setup
@@ -39,11 +38,15 @@ switch (userChoice)
         player.Inv.AddToInventory("shield");
         Console.Clear();
         Console.WriteLine("You lift the scarred, iron-rimmed shield. Vance gives a grim smile, knowing it will keep you alive.");
+        Console.WriteLine();
+        Console.WriteLine("+5 is added to your defence");
         break;
     case 2:
         player.Inv.AddToInventory("steel sword");
         Console.Clear();
         Console.WriteLine("You unbuckle the heavy, well-balanced steel sword from Vance's belt. He nods approvingly as you test its weight.");
+        Console.WriteLine();
+        Console.WriteLine("+5 is added to your attack");
         break;
 }
 
@@ -173,6 +176,146 @@ int UserChoice(int numOfChoice)
 
 void Battle(Player player, NPC enemy)
 {
-    Console.WriteLine($"You have entered a battle with {NPC.Name}");
+    
+    bool enemyDead = false;
+    bool powerPotion = false;
+
+    Console.WriteLine($"You have entered a battle with a {enemy.Name}");
+
+    while (!enemyDead)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Your turn, what will you do?");
+        Console.WriteLine();
+        Console.WriteLine("1. Attack");
+        Console.WriteLine("2. Heavy Attack");
+        Console.WriteLine("3. Drink Potion");
+        userChoice = UserChoice(3);
+
+        switch (userChoice)
+        {
+            case 1:
+                double playerDamage = player.Attack();
+                if (powerPotion)
+                {
+                    playerDamage = playerDamage * 2;
+                    powerPotion = false;
+                }
+                playerDamage = playerDamage - enemy.Armour - enemy.Defend();
+                if (playerDamage <= 0)
+                {
+                    Console.WriteLine("You missed and did 0 damage");
+                }
+                else
+                {
+                    Console.WriteLine($"You hit the {enemy.Name} for {playerDamage}");
+                    enemy.Health -= playerDamage;
+                }
+
+                if (enemy.Health <= 0)
+                {
+                    Console.WriteLine($"You have defeated the {enemy.Name}");
+                    enemyDead = true;
+                }
+                break;
+
+            case 2:
+                double playerHeavyDamage = player.HeavyAttack();
+                if (powerPotion)
+                {
+                    playerHeavyDamage = playerHeavyDamage * 2;
+                    powerPotion = false;
+                }
+                playerHeavyDamage = playerHeavyDamage - enemy.Armour - enemy.Defend();
+                if (playerHeavyDamage <= 0)
+                {
+                    Console.WriteLine("You missed and did 0 damage");
+                }
+                else
+                {
+                    Console.WriteLine($"You hit the {enemy.Name} for {playerHeavyDamage}");
+                    enemy.Health -= playerHeavyDamage;
+                }
+
+                if (enemy.Health <= 0)
+                {
+                    Console.WriteLine($"You have defeated the {enemy.Name}");
+                    enemyDead = true;
+                }
+                break;
+
+            case 3:
+
+                Console.WriteLine("Which potion would you like to drink");
+                Console.WriteLine("1. Health");
+                Console.WriteLine("2. Power");
+                int potionChoice = UserChoice(2);
+
+                switch (potionChoice)
+                {
+                    case 1:
+                        if (player.Inv.HealthPotion > 0)
+                        {
+                            Console.WriteLine($"You drink a Health Potion, you are back at your full health of {player.MaxHealth}");
+                            player.Health = player.MaxHealth;
+                            player.Inv.HealthPotion--;
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry, you have no health potions left");
+                            break;
+                        }
+
+                    case 2:
+                        if (player.Inv.PowerPotion > 0)
+                        {
+                            Console.WriteLine($"You drink a Power Potion, your next attack will do double damage.");
+                            powerPotion = true;
+                            player.Inv.PowerPotion--;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Sorry, you have no power potions left");
+                            break;
+                        }
+                        break;
+                }
+                break;
+        }
+
+        Console.WriteLine($"It's now {enemy.Name}'s turn");
+        Console.WriteLine();
+
+        double enemyDamage = enemy.Attack();
+        enemyDamage = enemyDamage - player.Armour - player.Defend();
+
+        if (enemyDamage <= 0)
+        {
+            Console.WriteLine($"{enemy.Name} missed and did 0 damage");
+        }
+        else
+        {
+            Console.WriteLine($"{enemy.Name} hit you for {enemyDamage}");
+            enemy.Health -= enemyDamage;
+        }
+
+        if (player.Health <= 0)
+        {
+            Console.WriteLine($"You have been killed by a {enemy.Name},");
+            GameOver();
+            
+        }
+
+    }
 }
+
+void GameOver()
+{
+    Console.WriteLine("\nGAME OVER");
+    Console.WriteLine();
+
+    Environment.Exit(0);
+}
+
 #endregion
