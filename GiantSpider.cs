@@ -8,7 +8,7 @@ namespace RPG
     {
         
 
-        public GiantSpider(string name = "Giant Spider", double health = 50, double attackMax = 20, double defenseMax = 15, double armour = 5) : base(name, health, attackMax, defenseMax, armour)
+        public GiantSpider(string name = "Giant Spider", double health = 50, double attackMax = 30, double defenseMax = 30, double armour = 5) : base(name, health, attackMax, defenseMax, armour)
         {
             
         }

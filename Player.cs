@@ -37,6 +37,10 @@ namespace RPG
             {
                 return rnd.Next(1, (int)AttackMax + 1) + 5;
             }
+            else if(Inv.PowerSword == 1)
+            {
+                return rnd.Next(1, (int)AttackMax + 1) + 15;
+            }
             else
             {
                 return rnd.Next(1, (int)AttackMax + 1);
@@ -52,6 +56,21 @@ namespace RPG
                     Stamina--;
                     return rnd.Next(10, ((int)AttackMax + 1 + 10))+ 5;
                 }
+                
+                else
+                {
+                    Console.WriteLine("You have no stamina left, you attack normally instead.");
+                    return Attack();
+                }
+            }
+            else if (Inv.PowerSword == 1)
+            {
+                if (Stamina > 0)
+                {
+                    Stamina--;
+                    return rnd.Next(10, ((int)AttackMax + 1 + 10)) + 15;
+                }
+
                 else
                 {
                     Console.WriteLine("You have no stamina left, you attack normally instead.");

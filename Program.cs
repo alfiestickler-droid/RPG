@@ -123,6 +123,101 @@ Continue();
 
 #endregion
 
+#region Act 2
+
+Console.WriteLine("Descending the spiral steps, the damp stonework of the outpost gives way to vast, vaulted burial chambers lined with ancient stone sarcophagi. A pale, unnatural mist clings to the flagstones, and the air smells of dust and ozone.");
+Console.WriteLine();
+Console.WriteLine("Ahead, the main crypt gallery splits into three ominous passages, each leading deeper toward the sealed heart of the fortress. You must choose which path to brave.");
+Continue();
+
+Console.WriteLine("Path 1: Faint blue light pulses beneath a cracked iron grate, accompanied by the slow, rhythmic scraping of a heavy blade dragged across stone.");
+Console.WriteLine();
+Console.WriteLine("Path 2: Rows of sealed stone coffins line a narrow, undisturbed hallway where even the mist seems reluctant to enter.");
+Console.WriteLine();
+Console.WriteLine("Path 3: The heavy clatter of rusted armour and sharp, chittering goblin barks echo from a wide, pillared hall ahead.");
+
+Console.WriteLine();
+Console.WriteLine("Which path will you take?");
+Console.WriteLine("Path 1");
+Console.WriteLine("Path 2");
+Console.WriteLine("Path 3");
+userChoice = UserChoice(3);
+
+switch (userChoice)
+{
+    case 1:
+        Console.Clear();
+        Console.WriteLine("A goblin roams the room as well as 2 towering Skeleton Warriors stands sentinel before a glowing altar, rising to strike the moment your shadow crosses the threshold.");
+        Battle(player, new Goblin());
+        Console.Clear();
+        Console.WriteLine("As you strike down the goblin the first skeleton warrior approches");
+        Battle(player, new Skeleton());
+        Console.Clear();
+        Console.WriteLine("The first skeleton warrior crumbles to dust, teh second approches");
+        Battle(player, new Skeleton());
+        Console.Clear();
+        Console.WriteLine("As you defeat the second skeleton warrior and it crumbles to dust the alter in the room is unlocked");
+        Console.WriteLine();
+        Console.WriteLine("A voice is heard all around you.\n \"You have proven yourself worthy, you can now choose to get either my Sword of Power or Shield of Power, choose wisley\"");
+        Console.WriteLine();
+        Console.WriteLine("What will you choose?");
+        Console.WriteLine();
+        Console.WriteLine("1. Sword of Power");
+        Console.WriteLine("2. Shield of Power");
+        userChoice = UserChoice(2);
+
+        switch (userChoice)
+        {
+            case 1:
+                Console.WriteLine("You chose the Sword of power\n +15 to each attack");
+                player.Inv.SteelSword = 0;
+                player.Inv.PowerSword++;
+                break;
+            case 2:
+                Console.WriteLine("You chose the Shield of power\n +15 to each Defence");
+                player.Inv.Shield = 0;
+                player.Inv.PowerShield++;
+                break;
+        }
+        Continue();
+        Console.WriteLine("After searching the rest of teh room you find a power potion");
+        player.Inv.PowerPotion++;
+        Continue();
+
+        break;
+    case 2:
+        Console.Clear();
+        Console.WriteLine("You pry open an ancient warden's funerary chest tucked behind a toppled statue, a health potion and a power potion.");
+        player.Inv.AddToInventory("health potion");
+        player.Inv.AddToInventory("power potion");
+        Continue();
+        break;
+    case 3:
+        Console.Clear();
+        Console.WriteLine("You step into an ambush where a Skeleton Warrior stands guard alongside a Goblin, working together to block the exit.");
+        Console.WriteLine();
+        Console.WriteLine("You have no choice but to attack.");
+        Battle(player, new Goblin());
+        Console.WriteLine("You easily defeat the goblin, but the skeleton now approches!");
+        Battle(player, new Skeleton());
+        Console.WriteLine("After defeating the skeleton warrior he crumbles to dust");
+        Continue();
+        Console.WriteLine("You search the hall and find nothing useful.");
+        Continue();
+        break;
+}
+Console.WriteLine("Emerging from your chosen crypt passage, the dusty stone tombs abruptly drop away into a vast subterranean gorge. Thick, rusted iron chains stretch across the abyss, suspending a series of ancient stone bridges over a glowing, shadowy void.");
+Console.WriteLine();
+Console.WriteLine("The air here is freezing and crackles with dark static. Distant, inhuman roars echo from the bridges ahead, signalling that you have left the outer burial grounds behind and entered the fortress's inner defences.");
+Console.WriteLine();
+Console.WriteLine("There is still no safe haven to stop and recover. Surviving the undead guardians of the ossuary has sharpened your battle instincts, giving you a brief moment to focus your strength before crossing into the chasm.");
+
+Continue();
+StatUpgrade();
+Continue();
+
+#endregion
+
 #endregion
 
 #region functions
