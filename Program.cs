@@ -321,7 +321,15 @@ Console.WriteLine("Crossing the far side of the chasm, you pass through a heavy 
 Console.WriteLine();
 Console.WriteLine("Just ahead stand the towering, rune-carved doors of the Obsidian Sanctum. Knowing the source of the corruption waits on the other side, you take a rare moment to catch your breath, tend to your wounds, and prepare for the final battle.");
 Continue();
-Console.WriteLine("You rest by a warm fire you make, completely restoring your Health and giving you 2 Stamina.");
+if (player is Mage mage)
+{
+    Console.WriteLine("You rest by a warm fire you make, completely restoring your Health and giving you 2 Stamina and 2 Mana.");
+    mage.Mana += 2;
+}
+else
+{
+    Console.WriteLine("You rest by a warm fire you make, completely restoring your Health and giving you 2 Stamina.");
+}
 player.Health = player.MaxHealth;
 player.Stamina += 2;
 Continue();
@@ -449,109 +457,246 @@ void Battle(Player player, NPC enemy)
         Console.WriteLine();
         Console.WriteLine("Your turn, what will you do?");
         Console.WriteLine();
-        Console.WriteLine("1. Attack");
-        Console.WriteLine("2. Heavy Attack");
-        Console.WriteLine($"3. Drink Potion, you have {player.Inv.HealthPotion + player.Inv.PowerPotion} potions avalible");
-        userChoice = UserChoice(3);
-
-        switch (userChoice)
+        if (player is Mage mage)
         {
-            case 1:
-                double playerDamage = player.Attack();
-                if (powerPotion)
-                {
-                    playerDamage = playerDamage * 2;
-                    powerPotion = false;
-                }
-                playerDamage = playerDamage - enemy.Armour - enemy.Defend();
-                if (playerDamage <= 0)
-                {
-                    Console.WriteLine("You missed and did 0 damage");
-                }
-                else
-                {
-                    Console.WriteLine($"You hit the {enemy.Name} for {playerDamage}");
-                    enemy.Health -= playerDamage;
-                    Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
-                }
+            Console.WriteLine("1. Attack");
+            Console.WriteLine("2. Heavy Attack");
+            Console.WriteLine($"3. Drink Potion, you have {player.Inv.HealthPotion + player.Inv.PowerPotion} potions avalible");
+            Console.WriteLine($"4. Magic Attack, you have {mage.Mana} Mana");
+            userChoice = UserChoice(4);
 
-                if (enemy.Health <= 0)
-                {
-                    Console.WriteLine($"You have defeated the {enemy.Name}");
-                    Continue();
-                    enemyDead = true;
-                }
-                break;
+            switch (userChoice)
+            {
+                case 1:
+                    double playerDamage = player.Attack();
+                    if (powerPotion)
+                    {
+                        playerDamage = playerDamage * 2;
+                        powerPotion = false;
+                    }
+                    playerDamage = playerDamage - enemy.Armour - enemy.Defend();
+                    if (playerDamage <= 0)
+                    {
+                        Console.WriteLine("You missed and did 0 damage");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You hit the {enemy.Name} for {playerDamage}");
+                        enemy.Health -= playerDamage;
+                        Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
+                    }
 
-            case 2:
-                double playerHeavyDamage = player.HeavyAttack();
-                if (powerPotion)
-                {
-                    playerHeavyDamage = playerHeavyDamage * 2;
-                    powerPotion = false;
-                }
-                playerHeavyDamage = playerHeavyDamage - enemy.Armour - enemy.Defend();
-                if (playerHeavyDamage <= 0)
-                {
-                    Console.WriteLine("You missed and did 0 damage");
-                    Console.WriteLine($"Your stamina is now at {player.Stamina}");
-                    
-                }
-                else
-                {
-                    Console.WriteLine($"You hit the {enemy.Name} for {playerHeavyDamage}");
-                    Console.WriteLine($"Your stamina is now at {player.Stamina}");
-                    enemy.Health -= playerHeavyDamage;
-                    Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
-                }
+                    if (enemy.Health <= 0)
+                    {
+                        Console.WriteLine($"You have defeated the {enemy.Name}");
+                        Continue();
+                        enemyDead = true;
+                    }
+                    break;
 
-                if (enemy.Health <= 0)
-                {
-                    Console.WriteLine($"You have defeated the {enemy.Name}");
-                    Continue();
-                    enemyDead = true;
-                }
-                break;
+                case 2:
+                    double playerHeavyDamage = player.HeavyAttack();
+                    if (powerPotion)
+                    {
+                        playerHeavyDamage = playerHeavyDamage * 2;
+                        powerPotion = false;
+                    }
+                    playerHeavyDamage = playerHeavyDamage - enemy.Armour - enemy.Defend();
+                    if (playerHeavyDamage <= 0)
+                    {
+                        Console.WriteLine("You missed and did 0 damage");
+                        Console.WriteLine($"Your stamina is now at {player.Stamina}");
 
-            case 3:
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You hit the {enemy.Name} for {playerHeavyDamage}");
+                        Console.WriteLine($"Your stamina is now at {player.Stamina}");
+                        enemy.Health -= playerHeavyDamage;
+                        Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
+                    }
 
-                Console.WriteLine("Which potion would you like to drink");
-                Console.WriteLine($"1. Health {player.Inv.HealthPotion}");
-                Console.WriteLine($"2. Power {player.Inv.PowerPotion}");
-                int potionChoice = UserChoice(2);
+                    if (enemy.Health <= 0)
+                    {
+                        Console.WriteLine($"You have defeated the {enemy.Name}");
+                        Continue();
+                        enemyDead = true;
+                    }
+                    break;
 
-                switch (potionChoice)
-                {
-                    case 1:
-                        if (player.Inv.HealthPotion > 0)
-                        {
-                            Console.WriteLine($"You drink a Health Potion, you are back at your full health of {player.MaxHealth}");
-                            player.Health = player.MaxHealth;
-                            player.Inv.HealthPotion--;
+                case 3:
+
+                    Console.WriteLine("Which potion would you like to drink");
+                    Console.WriteLine($"1. Health {player.Inv.HealthPotion}");
+                    Console.WriteLine($"2. Power {player.Inv.PowerPotion}");
+                    int potionChoice = UserChoice(2);
+
+                    switch (potionChoice)
+                    {
+                        case 1:
+                            if (player.Inv.HealthPotion > 0)
+                            {
+                                Console.WriteLine($"You drink a Health Potion, you are back at your full health of {player.MaxHealth}");
+                                player.Health = player.MaxHealth;
+                                player.Inv.HealthPotion--;
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sorry, you have no health potions left");
+                                break;
+                            }
+
+                        case 2:
+                            if (player.Inv.PowerPotion > 0)
+                            {
+                                Console.WriteLine($"You drink a Power Potion, your next attack will do double damage.");
+                                powerPotion = true;
+                                player.Inv.PowerPotion--;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sorry, you have no power potions left");
+                                break;
+                            }
                             break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Sorry, you have no health potions left");
-                            break;
-                        }
+                    }
+                    break;
+                case 4:
+                    double playerMagicDamage = mage.MagicAttack();
+                    if (powerPotion)
+                    {
+                        playerMagicDamage = playerMagicDamage * 2;
+                        powerPotion = false;
+                    }
+                    playerMagicDamage = playerMagicDamage - enemy.Armour - enemy.Defend();
+                    if (playerMagicDamage <= 0)
+                    {
+                        Console.WriteLine("You missed and did 0 damage");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You hit the {enemy.Name} for {playerMagicDamage}");
+                        enemy.Health -= playerMagicDamage;
+                        Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
+                    }
 
-                    case 2:
-                        if (player.Inv.PowerPotion > 0)
-                        {
-                            Console.WriteLine($"You drink a Power Potion, your next attack will do double damage.");
-                            powerPotion = true;
-                            player.Inv.PowerPotion--;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Sorry, you have no power potions left");
-                            break;
-                        }
-                        break;
-                }
-                break;
+                    if (enemy.Health <= 0)
+                    {
+                        Console.WriteLine($"You have defeated the {enemy.Name}");
+                        Continue();
+                        enemyDead = true;
+                    }
+                    break;
+            }
         }
+        else
+        {
+            Console.WriteLine("1. Attack");
+            Console.WriteLine("2. Heavy Attack");
+            Console.WriteLine($"3. Drink Potion, you have {player.Inv.HealthPotion + player.Inv.PowerPotion} potions avalible");
+            userChoice = UserChoice(3);
+
+            switch (userChoice)
+            {
+                case 1:
+                    double playerDamage = player.Attack();
+                    if (powerPotion)
+                    {
+                        playerDamage = playerDamage * 2;
+                        powerPotion = false;
+                    }
+                    playerDamage = playerDamage - enemy.Armour - enemy.Defend();
+                    if (playerDamage <= 0)
+                    {
+                        Console.WriteLine("You missed and did 0 damage");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You hit the {enemy.Name} for {playerDamage}");
+                        enemy.Health -= playerDamage;
+                        Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
+                    }
+
+                    if (enemy.Health <= 0)
+                    {
+                        Console.WriteLine($"You have defeated the {enemy.Name}");
+                        Continue();
+                        enemyDead = true;
+                    }
+                    break;
+
+                case 2:
+                    double playerHeavyDamage = player.HeavyAttack();
+                    if (powerPotion)
+                    {
+                        playerHeavyDamage = playerHeavyDamage * 2;
+                        powerPotion = false;
+                    }
+                    playerHeavyDamage = playerHeavyDamage - enemy.Armour - enemy.Defend();
+                    if (playerHeavyDamage <= 0)
+                    {
+                        Console.WriteLine("You missed and did 0 damage");
+                        Console.WriteLine($"Your stamina is now at {player.Stamina}");
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($"You hit the {enemy.Name} for {playerHeavyDamage}");
+                        Console.WriteLine($"Your stamina is now at {player.Stamina}");
+                        enemy.Health -= playerHeavyDamage;
+                        Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
+                    }
+
+                    if (enemy.Health <= 0)
+                    {
+                        Console.WriteLine($"You have defeated the {enemy.Name}");
+                        Continue();
+                        enemyDead = true;
+                    }
+                    break;
+
+                case 3:
+
+                    Console.WriteLine("Which potion would you like to drink");
+                    Console.WriteLine($"1. Health {player.Inv.HealthPotion}");
+                    Console.WriteLine($"2. Power {player.Inv.PowerPotion}");
+                    int potionChoice = UserChoice(2);
+
+                    switch (potionChoice)
+                    {
+                        case 1:
+                            if (player.Inv.HealthPotion > 0)
+                            {
+                                Console.WriteLine($"You drink a Health Potion, you are back at your full health of {player.MaxHealth}");
+                                player.Health = player.MaxHealth;
+                                player.Inv.HealthPotion--;
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sorry, you have no health potions left");
+                                break;
+                            }
+
+                        case 2:
+                            if (player.Inv.PowerPotion > 0)
+                            {
+                                Console.WriteLine($"You drink a Power Potion, your next attack will do double damage.");
+                                powerPotion = true;
+                                player.Inv.PowerPotion--;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Sorry, you have no power potions left");
+                                break;
+                            }
+                            break;
+                    }
+                    break;
+            }
+        }
+        
 
         if (!enemyDead)
         {

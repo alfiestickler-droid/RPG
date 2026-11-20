@@ -20,7 +20,9 @@ namespace RPG
             if (Mana > 0)
             {
                 Mana--;
-                return rnd.Next(10, ((int)AttackMax + 20)); 
+                Console.WriteLine($"You now have {Mana} mana");
+                return rnd.Next(10, ((int)AttackMax) + 20); 
+                
             }
             else
             {
@@ -31,7 +33,7 @@ namespace RPG
 
         public override void ShowStats()
         {
-            Console.WriteLine($"{Name}'s \nHealth is {Health} \nmaximum attack is {AttackMax} \nmaximum defence is {DefenseMax} \nstamina is {Stamina} \narmour is {Armour} \nMana is {Mana}");
+            Console.WriteLine($"{Name}'s \nHealth is {Health} \nmaximum attack is {AttackMax} \nmaximum defence is {DefenseMax} \nstamina is {Stamina} \narmour is {Armour} \nmana is {Mana}");
         }
 
         #endregion
