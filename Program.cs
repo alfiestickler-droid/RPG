@@ -119,6 +119,8 @@ Continue();
 Console.WriteLine("Before you take your first step down the stairs, the trials of the upper ruins leave their mark on you. Surviving the ambushes and navigating the darkened halls has sharpened your instincts.");
 Console.WriteLine();
 StatUpgrade();
+Console.WriteLine();
+player.ShowStats();
 Continue();
 
 #endregion
@@ -214,6 +216,8 @@ Console.WriteLine("There is still no safe haven to stop and recover. Surviving t
 
 Continue();
 StatUpgrade();
+Console.WriteLine();
+player.ShowStats();
 Continue();
 
 #endregion
@@ -301,11 +305,13 @@ switch (userChoice)
         Console.WriteLine();
         Console.WriteLine("You go over and carefully retrive the item");
         Continue();
-        Console.WriteLine("You found an amulet of health!");
+        Console.WriteLine("You found an amulet of health and a health and power potion!");
         Console.WriteLine();
         Console.WriteLine("Health increased +50");
         player.MaxHealth += 50;
         player.Health += 50;
+        player.Inv.HealthPotion++;
+        player.Inv.PowerPotion++;
         Continue();
 
         break;
@@ -321,6 +327,8 @@ player.Stamina += 2;
 Continue();
 Console.WriteLine("Drawing on everything you have survived across the ruins, the ossuary, and the chasm, you permanently increase one core stat of your choice:");
 StatUpgrade();
+Console.WriteLine();
+player.ShowStats();
 Continue();
 
 #endregion
@@ -443,7 +451,7 @@ void Battle(Player player, NPC enemy)
         Console.WriteLine();
         Console.WriteLine("1. Attack");
         Console.WriteLine("2. Heavy Attack");
-        Console.WriteLine("3. Drink Potion");
+        Console.WriteLine($"3. Drink Potion, you have {player.Inv.HealthPotion + player.Inv.PowerPotion} potions avalible");
         userChoice = UserChoice(3);
 
         switch (userChoice)
@@ -487,12 +495,14 @@ void Battle(Player player, NPC enemy)
                 {
                     Console.WriteLine("You missed and did 0 damage");
                     Console.WriteLine($"Your stamina is now at {player.Stamina}");
+                    
                 }
                 else
                 {
                     Console.WriteLine($"You hit the {enemy.Name} for {playerHeavyDamage}");
                     Console.WriteLine($"Your stamina is now at {player.Stamina}");
                     enemy.Health -= playerHeavyDamage;
+                    Console.WriteLine($"The {enemy.Name}'s health is now {enemy.Health}");
                 }
 
                 if (enemy.Health <= 0)
@@ -506,8 +516,8 @@ void Battle(Player player, NPC enemy)
             case 3:
 
                 Console.WriteLine("Which potion would you like to drink");
-                Console.WriteLine("1. Health");
-                Console.WriteLine("2. Power");
+                Console.WriteLine($"1. Health {player.Inv.HealthPotion}");
+                Console.WriteLine($"2. Power {player.Inv.PowerPotion}");
                 int potionChoice = UserChoice(2);
 
                 switch (potionChoice)
