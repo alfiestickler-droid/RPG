@@ -8,7 +8,7 @@ namespace RPG
     {
         
 
-        public DungeonOverLord(string name = "Dungeon Overlord", double health = 200, double attackMax = 70, double defenseMax = 70, double armour = 30) : base(name, health, attackMax, defenseMax, armour)
+        public DungeonOverLord(string name = "Dungeon Overlord", double health = 200, double attackMax = 70, double defenseMax = 40, double armour = 20) : base(name, health, attackMax, defenseMax, armour)
         {
             
         }

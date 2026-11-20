@@ -180,7 +180,7 @@ switch (userChoice)
                 break;
         }
         Continue();
-        Console.WriteLine("After searching the rest of teh room you find a power potion");
+        Console.WriteLine("After searching the rest of the room you find a power potion");
         player.Inv.PowerPotion++;
         Continue();
 
@@ -321,6 +321,22 @@ player.Stamina += 2;
 Continue();
 Console.WriteLine("Drawing on everything you have survived across the ruins, the ossuary, and the chasm, you permanently increase one core stat of your choice:");
 StatUpgrade();
+Continue();
+
+#endregion
+
+#region Final Act
+
+Console.WriteLine("Stepping through the rune-carved doors, you enter a colossal, circular chamber pulsing with violet light. At the centre of the room lies a shattered stone altar, leaking tendrils of dark energy into the air.");
+Console.WriteLine();
+Console.WriteLine("Standing beside the broken seal is Malakor, the Dungeon Overlord—a towering, armoured figure once sworn to guard this prison, now twisted and empowered by the very corruption he was meant to contain. He turns slowly as you approach, raising a massive, dark-forged greatsword.");
+Continue();
+Console.WriteLine("\"Another ant crawls down from the surface. The ward is broken, traveller. The dark will consume this kingdom—and your bones will join my legions.\"");
+Battle(player, new DungeonOverLord());
+Console.WriteLine("You launch yourself off a rock and land the killing blow to Malakor");
+Continue();
+
+Console.WriteLine($"Congratulations {playerName} you have beaten the final boss an won the game!");
 Continue();
 
 #endregion
